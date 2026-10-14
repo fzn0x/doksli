@@ -26,7 +26,7 @@ export interface Settings {
 export const DEFAULT_SETTINGS: Settings = {
   style: 'x',
   theme: 'light',
-  background: 'spill',
+  background: 'void',
   ratio: '4:5',
   padding: 'm',
   resolution: 2,

@@ -114,9 +114,13 @@ function Backdrop({ capture }: { capture: Capture | undefined }) {
       {layers.map((src, i) => (
         <img key={src} src={src} alt="" data-leaving={i < layers.length - 1 || undefined} />
       ))}
+      <span className="grain" />
     </div>
   )
 }
+
+/** Dots while the feed is short enough to read at a glance; a counter once it is not. */
+const MAX_DOTS = 8
 
 function filenameFor(capture: Capture) {
   return `doksli-${capture.tweet.author.handle}-${capture.tweet.id}.png`
@@ -366,6 +370,22 @@ export function App() {
       <Backdrop capture={current} />
 
       <header className="masthead">
+        <svg className="brand-mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true">
+          <rect
+            x="9"
+            y="6"
+            width="30"
+            height="52"
+            rx="6"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="4.5"
+          />
+          <rect x="15" y="24" width="18" height="12" rx="2.5" fill="currentColor" />
+          <circle cx="51" cy="22" r="3.4" fill="var(--sand)" />
+          <circle cx="51" cy="33" r="3.4" fill="var(--sand)" />
+          <circle cx="51" cy="47.5" r="6" fill="currentColor" />
+        </svg>
         <span className="wordmark">doksli</span>
         <span className="tagline">Tweets, kept as images</span>
       </header>
@@ -426,12 +446,28 @@ export function App() {
           >
             <ChevronUp size={20} />
           </button>
-          <span className="feed-count tabular" aria-live="polite">
-            {activeIndex + 1}
-            <span aria-hidden="true">/</span>
-            <span className="sr-only"> of </span>
-            {captures.length}
-          </span>
+          {captures.length <= MAX_DOTS ? (
+            <ol className="feed-dots">
+              {captures.map((c, i) => (
+                <li key={c.tweet.id}>
+                  <button
+                    type="button"
+                    className="feed-dot"
+                    aria-label={`Capture ${i + 1} of ${captures.length}: ${c.tweet.author.name}`}
+                    aria-current={i === activeIndex || undefined}
+                    onClick={() => goTo(i)}
+                  />
+                </li>
+              ))}
+            </ol>
+          ) : (
+            <span className="feed-count tabular" aria-live="polite">
+              {activeIndex + 1}
+              <span aria-hidden="true">/</span>
+              <span className="sr-only"> of </span>
+              {captures.length}
+            </span>
+          )}
           <button
             type="button"
             className="icon-button icon-button-ring"

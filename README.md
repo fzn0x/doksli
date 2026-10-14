@@ -1,6 +1,11 @@
 <div align="center">
 
-# doksli
+<h1>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/brand/logo-light.svg">
+    <img src="docs/brand/logo-dark.svg" alt="doksli" height="64">
+  </picture>
+</h1>
 
 **Paste a tweet link. Keep it as an image.**
 
@@ -11,7 +16,7 @@ Nothing is retyped, so nothing can be faked.
 [![License: MIT](https://img.shields.io/badge/license-MIT-c7b9a6.svg)](LICENSE)
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Ffzn0x%2Fdoksli)
 
-<img src="docs/screenshot-desktop.png" alt="doksli on desktop: a captured tweet fills the stage, with style, theme, canvas, ratio, details and stamp controls on a rail to its right" width="860">
+<img src="docs/brand/cover.png" alt="doksli: tweets, kept as images. Real tweets only, nothing retyped. A captured tweet sits on the stage beside the labeled action rail." width="100%">
 
 </div>
 
@@ -33,6 +38,10 @@ Most tweet-image generators let you type any name and any text, which makes them
 | **Export** | Download a PNG, copy it to the clipboard on desktop, or share it from your phone. |
 
 Media, link previews, quote tweets, replies, and verified, business and government badges are all supported.
+
+<p align="center">
+  <img src="docs/screenshot-desktop.png" alt="doksli on desktop: a captured tweet fills the stage, with style, theme, canvas, ratio, details and stamp controls on a rail to its right" width="860">
+</p>
 
 <p align="center">
   <img src="docs/screenshot-mobile.png" alt="doksli on a phone" width="260">
@@ -130,6 +139,27 @@ The site is static, but the app needs `/api/tweet`. `api/tweet.ts` exports a sta
 ## Privacy
 
 Your captures and settings are stored in your browser's `localStorage` and never leave your device. The API proxy does not store tweets; responses are cached at the edge for five minutes.
+
+## Brand
+
+Brand assets live in [`docs/brand`](docs/brand):
+
+| File | Use |
+| --- | --- |
+| `logo-light.svg` | Logo for dark backgrounds (white mark and wordmark) |
+| `logo-dark.svg` | Logo for light backgrounds |
+| `mark.svg` | App icon on its void tile; also the favicon |
+| `cover.png` | README banner (2560×1280) |
+| `social-preview.png` | GitHub social preview (1280×640) |
+
+The mark is the app itself: a tall stage holding a captured card, with the rail beside it ending in the filled Download button. The wordmark is Sofia Sans Extra Condensed ExtraBold, converted to outlines, and always set in lowercase.
+
+| Token | Hex | Role |
+| --- | --- | --- |
+| Void | `#0a0a0a` | Ground |
+| White | `#ffffff` | Glyphs, primary action |
+| Sand | `#c7b9a6` | The one warm accent: engaged state, focus |
+| Haze | `#a9afb8` | Secondary text |
 
 ## Contributing
 

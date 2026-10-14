@@ -8,29 +8,30 @@ interface BylineProps {
   onRemove: () => void
 }
 
-/** The feed's author line: who posted it, when, and when doksli captured it. */
+/**
+ * The feed's author block: the poster's name set as the display line, then the author
+ * line (avatar, handle), when it was posted and when doksli captured it.
+ */
 export function Byline({ capture, onRemove }: BylineProps) {
   const { tweet } = capture
   const { author } = tweet
   return (
     <div className="byline">
+      <p className="byline-display" dir="auto">
+        {author.name}
+      </p>
       <div className="byline-who">
         <img
           className={`byline-avatar avatar-${author.shape}`}
           src={author.avatar}
           alt=""
-          width={44}
-          height={44}
+          width={36}
+          height={36}
           crossOrigin="anonymous"
         />
-        <div className="byline-names">
-          <span className="byline-name">
-            <span className="truncate">{author.name}</span>
-            <VerifiedBadge author={author} size={16} />
-            {capture.example && <span className="chip">Example</span>}
-          </span>
-          <span className="byline-handle">@{author.handle}</span>
-        </div>
+        <span className="byline-handle truncate">@{author.handle}</span>
+        <VerifiedBadge author={author} size={17} />
+        {capture.example && <span className="chip">Example</span>}
       </div>
       <p className="byline-meta">
         <span>Posted {formatShortDate(tweet.createdAt)}</span>

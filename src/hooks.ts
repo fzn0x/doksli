@@ -22,7 +22,7 @@ function measure(sheetOpen: boolean): Layout {
     }
   }
   const top = 64
-  const bottom = 156
+  const bottom = 186
   const sheet = sheetOpen ? Math.min(340, h * 0.42) : 0
   return {
     mobile: true,

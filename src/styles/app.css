@@ -116,8 +116,8 @@ button {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: blur(56px) saturate(1.2);
-  opacity: 0.62;
+  filter: blur(64px) saturate(0.95);
+  opacity: 0.34;
   transition: opacity 700ms var(--ease-out);
   animation: spill-in 700ms var(--ease-out);
 }
@@ -131,14 +131,18 @@ button {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 60% 70% at 50% 45%, rgb(10 10 10 / 0.05), rgb(10 10 10 / 0.7) 75%),
-    linear-gradient(
-      to right,
-      rgb(10 10 10 / 0.72),
-      transparent 30%,
-      transparent 70%,
-      rgb(10 10 10 / 0.6)
-    );
+    linear-gradient(to top, rgb(10 10 10 / 0.9), transparent 38%),
+    radial-gradient(ellipse 34% 46% at 50% 48%, rgb(10 10 10 / 0), rgb(10 10 10 / 0.94) 100%);
+}
+
+/* Film grain over the ground only: the stage above it stays a true preview of the export. */
+.grain {
+  position: absolute;
+  inset: 0;
+  background: url("/grain.png") repeat;
+  background-size: 192px 192px;
+  mix-blend-mode: overlay;
+  opacity: 0.32;
 }
 
 @keyframes spill-in {
@@ -156,6 +160,12 @@ button {
   align-items: baseline;
   gap: 14px;
   pointer-events: none;
+}
+
+.brand-mark {
+  flex: none;
+  align-self: center;
+  margin-right: -4px;
 }
 
 .wordmark {
@@ -215,7 +225,7 @@ button {
   flex: none;
   box-shadow:
     0 40px 90px -30px rgb(0 0 0 / 0.8),
-    0 0 0 1px rgb(255 255 255 / 0.07);
+    0 0 0 1px rgb(255 255 255 / 0.16);
 }
 
 .stage[data-transparent] {
@@ -324,50 +334,46 @@ button {
 .byline {
   display: grid;
   gap: 12px;
-  max-width: 320px;
+  max-width: 340px;
+}
+
+.byline-display {
+  display: -webkit-box;
+  margin: 0 0 4px;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-family: var(--display);
+  font-size: clamp(56px, 5.4vw, 84px);
+  font-weight: 800;
+  line-height: 0.88;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
 }
 
 .byline-who {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   min-width: 0;
 }
 
 .byline-avatar {
   flex: none;
-  width: 44px;
-  height: 44px;
+  width: 36px;
+  height: 36px;
+  margin-right: 4px;
   object-fit: cover;
   border: 1.5px solid rgb(255 255 255 / 0.2);
   background: var(--mist);
 }
 
-.byline-names {
-  display: grid;
-  min-width: 0;
-}
-
-.byline-name {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  min-width: 0;
-  font-family: var(--display);
-  font-size: 21px;
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.byline-name .badge {
-  flex: none;
-}
-
 .byline-handle {
-  font-size: 15px;
-  color: var(--haze);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--white);
 }
 
 .byline-meta {
@@ -392,6 +398,7 @@ button {
   border-radius: 999px;
   font: 700 12px / 1 var(--display);
   letter-spacing: 0.1em;
+  text-transform: uppercase;
   color: var(--sand);
 }
 
@@ -669,6 +676,46 @@ kbd {
   align-items: center;
   gap: 10px;
   transform: translateY(-50%);
+}
+
+.feed-dots {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 4px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.feed-dot {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.feed-dot::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.38);
+  transition:
+    height 240ms var(--ease-out),
+    background 160ms ease;
+}
+
+.feed-dot:hover::before {
+  background: rgb(255 255 255 / 0.75);
+}
+
+.feed-dot[aria-current="true"]::before {
+  height: 18px;
+  background: var(--white);
 }
 
 .feed-count {
@@ -1168,11 +1215,13 @@ fieldset {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    padding-top: 64px;
+    padding: 64px 0 calc(80px + env(safe-area-inset-bottom));
   }
 
   .feed-stage {
     order: 1;
+    flex: 1;
+    min-height: 0;
     align-items: center;
     gap: 8px;
     padding: 0 8px;
@@ -1185,22 +1234,37 @@ fieldset {
   .feed-byline {
     order: 2;
     align-self: stretch;
-    padding: 14px 16px 0;
+    padding: 10px 16px 12px;
   }
 
   .byline {
     max-width: none;
     grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "display display"
+      "who actions";
     align-items: center;
+    row-gap: 8px;
+  }
+
+  .byline-display {
+    grid-area: display;
+    margin: 0;
+    font-size: 38px;
+    -webkit-line-clamp: 1;
+  }
+
+  .byline-who {
+    grid-area: who;
+  }
+
+  .byline-actions {
+    grid-area: actions;
   }
 
   .byline-avatar {
-    width: 36px;
-    height: 36px;
-  }
-
-  .byline-name {
-    font-size: 18px;
+    width: 28px;
+    height: 28px;
   }
 
   .byline-handle {
@@ -1287,6 +1351,21 @@ fieldset {
 
   .feed-nav .icon-button {
     display: none;
+  }
+
+  .feed-dots {
+    flex-direction: row;
+    margin: 0;
+  }
+
+  .feed-dot {
+    width: 16px;
+    height: 24px;
+  }
+
+  .feed-dot[aria-current="true"]::before {
+    width: 18px;
+    height: 7px;
   }
 
   .feed-count {
