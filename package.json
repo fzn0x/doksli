@@ -1,0 +1,56 @@
+{
+  "name": "doksli",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Paste a tweet link, keep it as an image.",
+  "license": "MIT",
+  "author": "fzn0x",
+  "homepage": "https://github.com/fzn0x/doksli#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fzn0x/doksli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fzn0x/doksli/issues"
+  },
+  "keywords": [
+    "tweet",
+    "twitter",
+    "x",
+    "screenshot",
+    "image",
+    "vite",
+    "react"
+  ],
+  "engines": {
+    "node": ">=20.19"
+  },
+  "packageManager": "pnpm@10.29.3",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b",
+    "lint": "biome check .",
+    "format": "biome check --write ."
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/sofia-sans": "^5.3.0",
+    "@fontsource-variable/sofia-sans-extra-condensed": "^5.3.0",
+    "lucide-react": "^1.57.0",
+    "modern-screenshot": "^4.7.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.15",
+    "@types/node": "^24.19.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "typescript": "~6.0.2",
+    "vite": "^8.3.4"
+  }
+}
